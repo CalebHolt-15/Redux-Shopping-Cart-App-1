@@ -5,7 +5,8 @@ import Auth from "./components/Auth";
 import Layout from "./components/Layout";
 import Notification from "./components/Notification";
 import uiNotificationSlice from "./store/uiNotificationSlice";
-///
+///disable useEffect first render
+let isFirstRendered = true
 
 function App() {
   const cart = useSelector(state => state.cart)
@@ -16,6 +17,12 @@ function App() {
   console.log("notification:", notification);
   //async: wait till it finished then go to next
   useEffect(() => {
+    //disable first render of UseEffect
+    if(isFirstRendered){
+      isFirstRendered = false
+      return
+    }
+
     //Send state as sending request
     dispatch(uiNotificationSlice.actions.showNotification({
       message: "Sending Request to DB",
