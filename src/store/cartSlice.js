@@ -11,7 +11,7 @@ const cartSlice = createSlice({
     //dispatch fxn to get here:
     reducers: {
         addToCart(state, action){
-            const newItem = action.payload
+            const newItem = action.payload //payload comes from user
 
             //to check if item is already avialable
             const existingItem = state.itemsList.find(item => item.id === newItem.id)
@@ -30,6 +30,7 @@ const cartSlice = createSlice({
                 state.totalQuantity++
             }
         },
+
         removeFromCart(state, action){
             const id = action.payload
             const existingItem = state.itemsList.find(item => item.id === id)
@@ -43,6 +44,7 @@ const cartSlice = createSlice({
                 existingItem.totalPrice -= existingItem.price 
             }
         },
+        
         setShowCart(state){
             state.showCart = !state.showCart
         }        

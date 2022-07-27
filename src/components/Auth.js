@@ -7,7 +7,8 @@ import "./Auth.css";
 const Auth = () => {
   const dispatch = useDispatch()
 
-  const handleSubmit = (e) =>{
+  const handleLogin = (e) =>{
+
       e.preventDefault()
       dispatch(authSlice.actions.login())
   }
@@ -15,7 +16,7 @@ const Auth = () => {
   return (
     <div className="container">
       <h1>Login</h1>{" "}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogin}>
         <label htmlFor="id">Id</label>
         <input type="text" name="id" id="id" />
         <label htmlFor="password">Password</label>

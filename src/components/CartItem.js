@@ -2,11 +2,14 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import "./Cart.css";
 import cartSlice, { cartActions } from "./../store/cartSlice";
+
 const CartItem = ({ name, quantity, total, price, id }) => {
   const dispatch = useDispatch();
+  
   const removeItem = () => {
     dispatch(cartSlice.actions.removeFromCart(id));
   };
+  
   const addItem = () => {
     dispatch(
       cartSlice.actions.addToCart({
