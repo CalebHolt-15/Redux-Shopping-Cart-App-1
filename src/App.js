@@ -4,7 +4,7 @@ import "./App.css";
 import Auth from "./components/Auth";
 import Layout from "./components/Layout";
 import Notification from "./components/Notification";
-import uiNotificationSlice from "./store/uiNotificationSlice";
+import { fetchData, sendCartData } from "./store/cartActions";
 ///disable useEffect first render
 let isFirstRendered = true
 
@@ -14,6 +14,10 @@ function App() {
   const dispatch = useDispatch()
   const notification = useSelector(state => state.uiNotification.notification)
 
+  useEffect(() => {
+    dispatch(fetchData())
+  },[dispatch])
+
   //async: wait till it finished then go to next
   useEffect(() => {
     //disable first render of UseEffect
@@ -22,42 +26,19 @@ function App() {
       return
     }
 
-    //Send state as sending request
-    dispatch(uiNotificationSlice.actions.showNotification({
-      message: "Sending Request to DB",
-      type: "warning",
-      open: true
-    }))
-
-    const sendRequest = async() => {
-      const res = await fetch('https://redux-http-c6eb9-default-rtdb.firebaseio.com/cartItem.json',{
-        method: 'PUT',
-        body: JSON.stringify(cart)
-      })
-      const data = await res.json()
-      //Send state as Request is succesful
-      dispatch(uiNotificationSlice.actions.showNotification({
-        message:"Request Sent Successfully",
-        type:"success",
-        open: true
-      }))
+    //thunk fxn in redux
+    if(cart.changed){
+      dispatch(sendCartData(cart))
     }
 
-    sendRequest().catch(err => {
-      //Send Error
-      dispatch(uiNotificationSlice.actions.showNotification({
-        message: "Sending Request failed",
-        type: "error",
-        open: true
-      }))
-    } )
-  },[cart])
+  },[cart,dispatch])
 
   return (
+    //order/position matters
     <div className="App">
+       {notification && <Notification type={notification.type} message={notification.message} />}
        {!isLoggedin &&  <Auth />}
        {isLoggedin && <Layout />}
-       {notification && <Notification type={notification.type} message={notification.message} />}
     </div>
   );
 }

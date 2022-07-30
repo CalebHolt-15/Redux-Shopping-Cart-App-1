@@ -5,12 +5,20 @@ const cartSlice = createSlice({
     initialState: {
         itemsList: [],
         totalQuantity: 0,
-        showCart: false
+        showCart: false,
+        changed: false
     },
 
     //dispatch fxn to get here:
     reducers: {
+        //replace data with data from firebase
+        replaceData(state, action){
+            state.totalQuantity = action.payload.totalQuantity
+            state.itemsList = action.payload.itemsList
+        },
+
         addToCart(state, action){
+            state.changed = true
             const newItem = action.payload //payload comes from user
 
             //to check if item is already avialable
@@ -32,6 +40,7 @@ const cartSlice = createSlice({
         },
 
         removeFromCart(state, action){
+            state.changed = true
             const id = action.payload
             const existingItem = state.itemsList.find(item => item.id === id)
 
