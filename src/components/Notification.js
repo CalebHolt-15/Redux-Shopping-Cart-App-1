@@ -13,7 +13,6 @@ const Notification = ({type, message}) => {
         }))
     }
 
-
   return (
     <div>
         {notification.open && <Alert onClose={handleOnClose} severity={type}>{message}</Alert>}

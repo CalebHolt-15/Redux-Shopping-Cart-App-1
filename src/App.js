@@ -10,11 +10,10 @@ let isFirstRendered = true
 
 function App() {
   const cart = useSelector(state => state.cart)
-  const isLoggedin = useSelector(state => (state.auth.isLoggedin)) 
+  const isLoggedin = useSelector(state => state.auth.isLoggedin) 
   const dispatch = useDispatch()
-  const notification = useSelector(state => (state.uiNotification.notification))
+  const notification = useSelector(state => state.uiNotification.notification)
 
-  console.log("notification:", notification);
   //async: wait till it finished then go to next
   useEffect(() => {
     //disable first render of UseEffect
@@ -56,9 +55,9 @@ function App() {
 
   return (
     <div className="App">
-       {notification && <Notification type={notification.type} message={notification.message} />}
        {!isLoggedin &&  <Auth />}
        {isLoggedin && <Layout />}
+       {notification && <Notification type={notification.type} message={notification.message} />}
     </div>
   );
 }

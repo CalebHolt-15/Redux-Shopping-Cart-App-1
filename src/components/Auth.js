@@ -8,7 +8,6 @@ const Auth = () => {
   const dispatch = useDispatch()
 
   const handleLogin = (e) =>{
-
       e.preventDefault()
       dispatch(authSlice.actions.login())
   }
